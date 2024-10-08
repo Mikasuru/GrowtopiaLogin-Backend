@@ -189,6 +189,7 @@
             }
             $(this).attr('onclick', 'return false;');
         });
+        
         $('document').ready(function () {
             document.onkeydown = e => {
                 if (e.key == 123) {
@@ -218,6 +219,31 @@
                 window.location = // change the host into your own backend host
                     'https://gtlogin-backend.vercel.app/player/validate/close'; // https instead of http if u r using ssl
             });
+            
+            $('form').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: 'https://your-game-server.com/validate_player',
+                    method: 'POST',
+                    data: JSON.stringify({
+                        growId: $('#login-name').val(),
+                        password: $('#password').val()
+                    }),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        if (response.success) {
+                            // ส่งข้อมูลกลับไปยังเกมเพื่อเชื่อมต่อกับเซิร์ฟเวอร์
+                            window.location = 'growtopia://?' + encodeURIComponent(JSON.stringify(response.playerData));
+                        } else {
+                            alert('Login failed: ' + response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+            
             // $('form').submit($('form .grow-button').attr('disabled', 'true'));
             var observer = new MutationObserver(function (mutations) {
                 mutations.forEach(function (mutation) {
