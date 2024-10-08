@@ -233,7 +233,6 @@
                 success: function(response) {
                     const data = JSON.parse(response);
                     if (data.status === "success") {
-                        // ส่งข้อมูลกลับไปยังเกมเพื่อเชื่อมต่อกับเซิร์ฟเวอร์
                         window.location = 'growtopia://connect?token=' + encodeURIComponent(data.token);
                     } else {
                         alert('Login failed: ' + data.message);
