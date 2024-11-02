@@ -189,7 +189,6 @@
             }
             $(this).attr('onclick', 'return false;');
         });
-        
         $('document').ready(function () {
             document.onkeydown = e => {
                 if (e.key == 123) {
@@ -219,31 +218,6 @@
                 window.location = // change the host into your own backend host
                     'https://gtlogin-backend.vercel.app/player/validate/close'; // https instead of http if u r using ssl
             });
-            
-            $('form').submit(function(e) {
-            e.preventDefault();
-            $.ajax({
-                url: 'https://gtlogin-backend.vercel.app/player/growid/login/validate',
-                method: 'POST',
-                data: {
-                    _token: $('input[name="_token"]').val(),
-                    growId: $('#login-name').val(),
-                    password: $('#password').val()
-                },
-                success: function(response) {
-                    const data = JSON.parse(response);
-                    if (data.status === "success") {
-                        window.location = 'growtopia://connect?token=' + encodeURIComponent(data.token);
-                    } else {
-                        alert('Login failed: ' + data.message);
-                    }
-                },
-                error: function() {
-                    alert('An error occurred. Please try again.');
-                }
-            });
-        });
-            
             // $('form').submit($('form .grow-button').attr('disabled', 'true'));
             var observer = new MutationObserver(function (mutations) {
                 mutations.forEach(function (mutation) {
